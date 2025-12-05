@@ -1,15 +1,30 @@
 package com.distribuida.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "producto")
 public class Producto {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_producto")
     private int idProducto;
+    @Column(name = "nombre")
     private String nombre;
+    @Column(name = "descripcion")
     private String descripcion;
+    @Column(name = "precio")
     private Double precio;
-    private String tipoProducto;
+    @Column(name = "stock")
     private int stock;
+    @Column(name = "tipo_producto")
+    private String tipoProducto;
 
+    @ManyToOne
+    @JoinColumn(name = "id_categoria")
     public Categoria categoria;
+
 
     public Producto(){}
 

@@ -1,15 +1,26 @@
 package com.distribuida.model;
 
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "factura_detalle")
 public class FacturaDetalle {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_factura_detalle")
     private int idFacturaDetalla;
+    @Column(name = "cantidad")
     private int cantidad;
+    @Column(name = "subtotal")
     private Double subtotal;
 
+    @ManyToOne
+    @JoinColumn(name = "id_factura")
     public Factura factura;
 
+    @ManyToOne
+    @JoinColumn(name = "id_producto")
     public Producto producto;
 
     public FacturaDetalle(){}
