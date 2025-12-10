@@ -10,9 +10,9 @@ import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabas
 import org.springframework.test.annotation.Rollback;
 
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -29,6 +29,43 @@ private AccesoriosRepository accesoriosRepository;
         assertNotNull(accesorios);
         assertTrue(accesorios.size() > 0);
         accesorios.forEach(System.out::println);
+    }
+
+    @Test
+    public void testAccesoriosFindOne() {
+        Optional<Accesorios> accesorio = accesoriosRepository.findById(1);
+        assertTrue(accesorio.isPresent());
+        assertEquals("Sony", accesorio.orElse(null).getMarca());
+        System.out.println(accesorio);
+    }
+
+    @Test
+    public void testAccesoriosSave() {
+        Accesorios nuevoAccesorio = new Accesorios(
+                1,"Bluetooth", "PS5", "Sony", "Negro", "USB-C"
+        );
+        Accesorios guardado = accesoriosRepository.save(nuevoAccesorio);
+        assertNotNull(guardado.getIdProducto());
+        assertEquals("Sony", guardado.getMarca());
+    }
+
+    @Test
+    public void testAccesoriosActualizar() {
+        Optional<Accesorios> accesorio = accesoriosRepository.findById(2);
+        accesorio.orElseThrow().setColor("Rojo");
+        accesorio.orElseThrow().setConexion("HDMI");
+
+        Accesorios actualizado = accesoriosRepository.save(accesorio.orElseThrow());
+        assertEquals("Rojo", actualizado.getColor());
+        assertEquals("HDMI", actualizado.getConexion());
+    }
+
+    @Test
+    public void testAccesoriosDelete() {
+        if (accesoriosRepository.existsById(3)) {
+            accesoriosRepository.deleteById(3);
+        }
+        assertFalse(accesoriosRepository.existsById(3));
     }
 
 

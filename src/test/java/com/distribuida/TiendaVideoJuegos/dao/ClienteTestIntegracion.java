@@ -26,28 +26,28 @@ public class ClienteTestIntegracion {
     private ClienteRepository clienteRepository;
 
     @Test
-    public void testClienteFindAll(){
+    public void testClienteFindAll() {
         List<Cliente> clientes = clienteRepository.findAll();
         assertNotNull(clientes);
         assertTrue(clientes.size() > 0);
-        for (Cliente item: clientes){
+        for (Cliente item : clientes) {
             System.out.println(item.toString());
         }
     }
 
     @Test
-    public void testClienteFindOne(){
+    public void testClienteFindOne() {
         Optional<Cliente> cliente = clienteRepository.findById(1);
         assertNotNull(cliente.isPresent());
-        assertEquals("Carlos",cliente.orElse(null).getNombre());
-        assertEquals("Mendoza",cliente.orElse(null).getApellido());
+        assertEquals("Carlos", cliente.orElse(null).getNombre());
+        assertEquals("Mendoza", cliente.orElse(null).getApellido());
         System.out.println(cliente);
 
     }
 
     @Test
-    public void testClienteSave(){
-        Cliente cliente = new Cliente(1,"0102030405","Carlos","Mendoza","Av.América 123","0981234567","carlos.m@gmail.com");
+    public void testClienteSave() {
+        Cliente cliente = new Cliente(1, "0102030405", "Carlos", "Mendoza", "Av.América 123", "0981234567", "carlos.m@gmail.com");
         Cliente clienteGuardado = clienteRepository.save(cliente);
         assertNotNull(clienteGuardado);
         assertEquals("0102030405", clienteGuardado.getCedula());
@@ -55,26 +55,29 @@ public class ClienteTestIntegracion {
     }
 
     @Test
-    public void testClienteActualizar(){
-        Optional <Cliente> cliente = clienteRepository.findById(4);
+    public void testClienteActualizar() {
+        Optional<Cliente> cliente2 = clienteRepository.findById(4);
 
-        cliente.orElse(null).setCedula("172839456");
-        cliente.orElse(null).setNombre("Juan88");
-        cliente.orElse(null).setApellido("Taipe88");
-        cliente.orElse(null).setDireccion("Taipe88");
-        cliente.orElse(null).setTelefono("0936251488");
-        cliente.orElse(null).setCorreo("coreoo888@correeo.com");
-        clienteRepository.save(cliente.orElse(null));
+        cliente2.orElse(null).setCedula("172839456");
+        cliente2.orElse(null).setNombre("Juan88");
+        cliente2.orElse(null).setApellido("Taipe88");
+        cliente2.orElse(null).setDireccion("Direccion88");
+        cliente2.orElse(null).setTelefono("0936251488");
+        cliente2.orElse(null).setCorreo("correo88@correeo.com");
 
+        Cliente clienteActualizado = clienteRepository.save(cliente2.orElse(null));
+
+        assertNotNull(clienteActualizado);
+        assertEquals("Taipe88", clienteActualizado.getApellido());
+        assertEquals("Direccion88", clienteActualizado.getDireccion());
     }
 
-  /*  @Test
+    @Test
     public void testClienteDelete() {
         if (clienteRepository.existsById(5)) {
             clienteRepository.deleteById(5);
         }
-        assertFalse(clienteRepository.existsById(5));*/
-
-
+        assertFalse(clienteRepository.existsById(5));
+    }
 
 }
