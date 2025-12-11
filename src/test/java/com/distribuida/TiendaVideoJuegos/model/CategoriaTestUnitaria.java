@@ -17,8 +17,8 @@ public class CategoriaTestUnitaria {
     }
 
     @Test
-    public void testAccesoriosConstructor() {
-        assertAll("Validar datos del constructor - Accesorios",
+    public void testCategoriaConstructor() {
+        assertAll("Validar datos del constructor - Categoria",
                 () -> assertEquals(1, categoria.getIdCategoria()),
                 () -> assertEquals("Videojuegos", categoria.getCategoria()),
                 () -> assertEquals("Videojuegos físicos y digitales", categoria.getDescripcion())
@@ -26,33 +26,27 @@ public class CategoriaTestUnitaria {
     }
 
     @Test
-    public void testAccesoriosSetters() {
-        categoria.setIdCategoria(22);
-        categoria.setCategoria("Cableado");
-        categoria.setDescripcion("Switch");
+    public void testCategoriaSetters() {
+        categoria.setIdCategoria(2);
+        categoria.setCategoria("Consolas");
+        categoria.setDescripcion("Consolas de Videojuegos");
 
 
-        /*assertAll("Validar datos modificados - Accesorios",
-                () -> assertEquals(22, accesorios.getIdProducto()),
-                () -> assertEquals("Cableado", accesorios.getConectividad()),
-                () -> assertEquals("Switch", accesorios.getCompatibilidad()),
-                () -> assertEquals("Razer", accesorios.getMarca()),
-                () -> assertEquals("Negro", accesorios.getColor()),
-                () -> assertEquals("USB", accesorios.getConexion())
+        assertAll("Validar datos modificados - Categoria",
+                () -> assertEquals(2, categoria.getIdCategoria()),
+                () -> assertEquals("Consolas", categoria.getCategoria()),
+                () -> assertEquals("Consolas de Videojuegos", categoria.getDescripcion())
         );
     }
 
     @Test
-    public void testAutorToString() {
-        String str = accesorios.toString();
-        assertAll("Validar contenido de toString - Accesorios",
-                () -> assertTrue(str.contains("21")),
-                () -> assertTrue(str.contains("Inalámbrico")),
-                () -> assertTrue(str.contains("PS5")),
-                () -> assertTrue(str.contains("Sony")),
-                () -> assertTrue(str.contains("Blanco")),
-                () -> assertTrue(str.contains("USB-C"))
+    public void testCategoriaToString() {
+        String str = categoria.toString();
+        assertAll("Validar contenido de toString - Categoria",
+                () -> assertTrue(str.contains("1")),
+                () -> assertTrue(str.contains("Videojuegos")),
+                () -> assertTrue(str.contains("Videojuegos físicos y digitales"))
         );
-    }*/
+    }
 }
-}
+

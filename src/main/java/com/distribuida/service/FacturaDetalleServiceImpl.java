@@ -1,6 +1,6 @@
 package com.distribuida.service;
 
-import com.distribuida.dao.FacturaDetallRepository;
+import com.distribuida.dao.FacturaDetalleRepository;
 import com.distribuida.model.FacturaDetalle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,45 +12,45 @@ import java.util.Optional;
 public class FacturaDetalleServiceImpl implements FacturaDetalleService {
 
     @Autowired
-    private FacturaDetallRepository facturaDetallRepository;
+    private FacturaDetalleRepository facturaDetalleRepository;
 
     @Override
     public List<FacturaDetalle> findAll() {
-        return facturaDetallRepository.findAll();
+        return facturaDetalleRepository.findAll();
     }
 
     @Override
     public Optional<FacturaDetalle> findOne(int id) {
-        return facturaDetallRepository.findById(id);
+        return facturaDetalleRepository.findById(id);
     }
 
     @Override
     public FacturaDetalle save(FacturaDetalle detalle) {
-        return facturaDetallRepository.save(detalle);
+        return facturaDetalleRepository.save(detalle);
     }
 
     @Override
     public FacturaDetalle update(int id, FacturaDetalle detalle) {
-        if (!facturaDetallRepository.existsById(id)) {
+        if (!facturaDetalleRepository.existsById(id)) {
             return null;
         }
-        detalle.setIdFacturaDetalla(id);
-        return facturaDetallRepository.save(detalle);
+        detalle.setIdFacturaDetalle(id);
+        return facturaDetalleRepository.save(detalle);
     }
 
     @Override
     public FacturaDetalle update(FacturaDetalle detalle) {
-        int id = detalle.getIdFacturaDetalla();
-        if (!facturaDetallRepository.existsById(id)) {
+        int id = detalle.getIdFacturaDetalle();
+        if (!facturaDetalleRepository.existsById(id)) {
             return null;
         }
-        return facturaDetallRepository.save(detalle);
+        return facturaDetalleRepository.save(detalle);
     }
 
     @Override
     public void delete(int id) {
-        if (facturaDetallRepository.existsById(id)) {
-            facturaDetallRepository.deleteById(id);
+        if (facturaDetalleRepository.existsById(id)) {
+            facturaDetalleRepository.deleteById(id);
         }
     }
 }

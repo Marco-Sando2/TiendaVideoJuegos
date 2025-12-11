@@ -1,4 +1,90 @@
 package com.distribuida.TiendaVideoJuegos.dao;
 
+import com.distribuida.dao.FacturaDetalleRepository;
+import com.distribuida.dao.FacturaRepository;
+import com.distribuida.dao.ProductoRepository;
+import com.distribuida.model.FacturaDetalle;
+import com.distribuida.model.Factura;
+import com.distribuida.model.Producto;
+import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
+import org.springframework.test.annotation.Rollback;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Transactional
+@Rollback(value = false)
 public class FacturaDetalleTestIntegracion {
+
+    @Autowired
+    private FacturaDetalleRepository facturaDetalleRepository;
+
+    @Autowired
+    private FacturaRepository facturaRepository;
+
+    @Autowired
+    private ProductoRepository productoRepository;
+
+    @Test
+    public void testFacturaDetalleFindAll() {
+        List<FacturaDetalle> detalles = facturaDetalleRepository.findAll();
+        assertNotNull(detalles);
+        assertTrue(detalles.size() > 0);
+        detalles.forEach(System.out::println);
+    }
+
+    @Test
+    public void testFacturaDetalleFindOne() {
+        Optional<FacturaDetalle> detalle = facturaDetalleRepository.findById(1);
+        assertTrue(detalle.isPresent());
+        assertEquals(2, detalle.orElseThrow().getCantidad()); // ejemplo: cantidad esperada
+        System.out.println(detalle);
+    }
+
+    @Test
+    public void testFacturaDetalleSave() {
+        // Recuperar factura y producto existentes
+        Factura factura = facturaRepository.findById(1).orElseThrow();
+        Producto producto = productoRepository.findById(1).orElseThrow();
+
+        FacturaDetalle nuevoDetalle = new FacturaDetalle(
+                0, // dejar que JPA genere el id
+                3, // cantidad
+                producto.getPrecio() * 3, // subtotal calculado
+                factura,
+                producto
+        );
+
+        FacturaDetalle guardado = facturaDetalleRepository.save(nuevoDetalle);
+
+        assertNotNull(guardado.getIdFacturaDetalle());
+        assertEquals(3, guardado.getCantidad());
+        assertEquals(producto.getPrecio() * 3, guardado.getSubtotal());
+    }
+
+    @Test
+    public void testFacturaDetalleActualizar() {
+        Optional<FacturaDetalle> detalle = facturaDetalleRepository.findById(2);
+        detalle.orElseThrow().setCantidad(5);
+        detalle.orElseThrow().setSubtotal(detalle.orElseThrow().getProducto().getPrecio() * 5);
+
+        FacturaDetalle actualizado = facturaDetalleRepository.save(detalle.orElseThrow());
+        assertEquals(5, actualizado.getCantidad());
+    }
+
+    @Test
+    public void testFacturaDetalleDelete() {
+        if (facturaDetalleRepository.existsById(3)) {
+            facturaDetalleRepository.deleteById(3);
+        }
+        assertFalse(facturaDetalleRepository.existsById(3));
+    }
 }

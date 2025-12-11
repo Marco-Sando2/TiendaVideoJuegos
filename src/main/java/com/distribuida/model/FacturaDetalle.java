@@ -9,7 +9,7 @@ public class FacturaDetalle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_factura_detalle")
-    private int idFacturaDetalla;
+    private int idFacturaDetalle;
     @Column(name = "cantidad")
     private int cantidad;
     @Column(name = "subtotal")
@@ -25,20 +25,20 @@ public class FacturaDetalle {
 
     public FacturaDetalle(){}
 
-    public FacturaDetalle(int idFacturaDetalla, int cantidad, Double subtotal, Factura factura, Producto producto) {
-        this.idFacturaDetalla = idFacturaDetalla;
+    public FacturaDetalle(int idFacturaDetalle, int cantidad, Double subtotal, Factura factura, Producto producto) {
+        this.idFacturaDetalle = idFacturaDetalle;
         this.cantidad = cantidad;
         this.subtotal = subtotal;
         this.factura = factura;
         this.producto = producto;
     }
 
-    public int getIdFacturaDetalla() {
-        return idFacturaDetalla;
+    public int getIdFacturaDetalle() {
+        return idFacturaDetalle;
     }
 
-    public void setIdFacturaDetalla(int idFacturaDetalla) {
-        this.idFacturaDetalla = idFacturaDetalla;
+    public void setIdFacturaDetalle(int idFacturaDetalle) {
+        this.idFacturaDetalle = idFacturaDetalle;
     }
 
     public int getCantidad() {
@@ -76,7 +76,7 @@ public class FacturaDetalle {
     @Override
     public String toString() {
         return "FacturaDetalle{" +
-                "idFacturaDetalla=" + idFacturaDetalla +
+                "idFacturaDetalle=" + idFacturaDetalle +
                 ", cantidad=" + cantidad +
                 ", subtotal=" + subtotal +
                 ", factura=" + factura +
