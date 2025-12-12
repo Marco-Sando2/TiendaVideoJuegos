@@ -8,7 +8,7 @@ public class Consola {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_consola")
+    @Column(name = "id_producto")
     private int idConsola;
     @Column(name = "marca")
     private String marca;

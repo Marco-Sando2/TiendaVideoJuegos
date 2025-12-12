@@ -23,7 +23,6 @@ public class ConsolaTestIntegracion {
     @Autowired
     private ConsolaRepository consolaRepository;
 
-    // 1. Listar todas las consolas
     @Test
     public void testConsolaFindAll() {
         List<Consola> consolas = consolaRepository.findAll();
@@ -32,51 +31,47 @@ public class ConsolaTestIntegracion {
         consolas.forEach(System.out::println);
     }
 
-    // 2. Buscar una consola por ID
     @Test
     public void testConsolaFindOne() {
-        Optional<Consola> consola = consolaRepository.findById(1);
+        Optional<Consola> consola = consolaRepository.findById(11);
         assertTrue(consola.isPresent());
         assertEquals("Sony", consola.orElseThrow().getMarca());
         System.out.println(consola);
     }
 
-    // 3. Guardar una nueva consola
     @Test
     public void testConsolaSave() {
         Consola nuevaConsola = new Consola(
-                0, // dejar que JPA genere el id
-                "Microsoft",
-                "Xbox Series X",
-                "1TB",
-                "Negro"
+                11,
+                "Sony",
+                "CFI-1215A",
+                "825GB",
+                "Blanco"
         );
 
         Consola guardada = consolaRepository.save(nuevaConsola);
 
         assertNotNull(guardada.getIdConsola());
-        assertEquals("Microsoft", guardada.getMarca());
-        assertEquals("Xbox Series X", guardada.getModelo());
+        assertEquals("Sony", guardada.getMarca());
+        assertEquals("CFI-1215A", guardada.getModelo());
     }
 
-    // 4. Actualizar una consola existente
     @Test
     public void testConsolaActualizar() {
-        Optional<Consola> consola = consolaRepository.findById(2);
+        Optional<Consola> consola = consolaRepository.findById(32);
         consola.orElseThrow().setColor("Blanco");
-        consola.orElseThrow().setAlmacenamiento("2TB");
+        consola.orElseThrow().setAlmacenamiento("2GB");
 
         Consola actualizada = consolaRepository.save(consola.orElseThrow());
         assertEquals("Blanco", actualizada.getColor());
-        assertEquals("2TB", actualizada.getAlmacenamiento());
+        assertEquals("2GB", actualizada.getAlmacenamiento());
     }
 
-    // 5. Eliminar una consola
     @Test
     public void testConsolaDelete() {
-        if (consolaRepository.existsById(33)) {
-            consolaRepository.deleteById(33);
+        if (consolaRepository.existsById(32)) {
+                consolaRepository.deleteById(32);
         }
-        assertFalse(consolaRepository.existsById(33));
+        assertFalse(consolaRepository.existsById(32));
     }
 }

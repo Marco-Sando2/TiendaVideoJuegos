@@ -93,5 +93,4 @@ public class ClienteTestIntegracion {
         assertFalse(clienteRepository.existsById(guardado.getIdCliente()));
     }
 
-
 }

@@ -43,9 +43,9 @@ public class FacturaDetalleTestIntegracion {
 
     @Test
     public void testFacturaDetalleFindOne() {
-        Optional<FacturaDetalle> detalle = facturaDetalleRepository.findById(1);
+        Optional<FacturaDetalle> detalle = facturaDetalleRepository.findById(81);
         assertTrue(detalle.isPresent());
-        assertEquals(2, detalle.orElseThrow().getCantidad()); // ejemplo: cantidad esperada
+        assertEquals(1, detalle.orElseThrow().getCantidad());
         System.out.println(detalle);
     }
 
@@ -56,9 +56,9 @@ public class FacturaDetalleTestIntegracion {
         Producto producto = productoRepository.findById(1).orElseThrow();
 
         FacturaDetalle nuevoDetalle = new FacturaDetalle(
-                0, // dejar que JPA genere el id
-                3, // cantidad
-                producto.getPrecio() * 3, // subtotal calculado
+                81,
+                1,
+                producto.getPrecio() * 59.99,
                 factura,
                 producto
         );
@@ -66,15 +66,15 @@ public class FacturaDetalleTestIntegracion {
         FacturaDetalle guardado = facturaDetalleRepository.save(nuevoDetalle);
 
         assertNotNull(guardado.getIdFacturaDetalle());
-        assertEquals(3, guardado.getCantidad());
-        assertEquals(producto.getPrecio() * 3, guardado.getSubtotal());
+        assertEquals(1, guardado.getCantidad());
+        assertEquals(producto.getPrecio() * 59.99, guardado.getSubtotal());
     }
 
     @Test
     public void testFacturaDetalleActualizar() {
-        Optional<FacturaDetalle> detalle = facturaDetalleRepository.findById(2);
+        Optional<FacturaDetalle> detalle = facturaDetalleRepository.findById(160);
         detalle.orElseThrow().setCantidad(5);
-        detalle.orElseThrow().setSubtotal(detalle.orElseThrow().getProducto().getPrecio() * 5);
+        detalle.orElseThrow().setSubtotal(detalle.orElseThrow().getProducto().getPrecio());
 
         FacturaDetalle actualizado = facturaDetalleRepository.save(detalle.orElseThrow());
         assertEquals(5, actualizado.getCantidad());
@@ -82,9 +82,9 @@ public class FacturaDetalleTestIntegracion {
 
     @Test
     public void testFacturaDetalleDelete() {
-        if (facturaDetalleRepository.existsById(3)) {
-            facturaDetalleRepository.deleteById(3);
+        if (facturaDetalleRepository.existsById(160)) {
+            facturaDetalleRepository.deleteById(160);
         }
-        assertFalse(facturaDetalleRepository.existsById(3));
+        assertFalse(facturaDetalleRepository.existsById(160));
     }
 }
