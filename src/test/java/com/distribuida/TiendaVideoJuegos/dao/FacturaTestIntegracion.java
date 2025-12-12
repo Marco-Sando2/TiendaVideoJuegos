@@ -41,13 +41,12 @@ public class FacturaTestIntegracion {
     public void testFacturaFindOne() {
         Optional<Factura> factura = facturaRepository.findById(1);
         assertTrue(factura.isPresent());
-        assertEquals("FAC-001", factura.orElseThrow().getNumFactura());
+        assertEquals("F001", factura.orElseThrow().getNumFactura());
         System.out.println(factura);
     }
 
     @Test
     public void testFacturaSave() {
-        // Recuperar cliente existente con id=1
         Cliente cliente = clienteRepository.findById(1).orElseThrow();
 
         Factura nuevaFactura = new Factura(
@@ -81,9 +80,9 @@ public class FacturaTestIntegracion {
 
     @Test
     public void testFacturaDelete() {
-        if (facturaRepository.existsById(3)) {
-            facturaRepository.deleteById(3);
+        if (facturaRepository.existsById(79)) {
+            facturaRepository.deleteById(79);
         }
-        assertFalse(facturaRepository.existsById(3));
+        assertFalse(facturaRepository.existsById(79));
     }
 }

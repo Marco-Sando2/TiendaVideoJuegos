@@ -35,21 +35,21 @@ public class CategoriaTestIntegracion {
     public void testCategoriaFindOne() {
         Optional<Categoria> categoria = categoriaRepository.findById(1);
         assertTrue(categoria.isPresent());
-        assertEquals("Consolas", categoria.orElseThrow().getCategoria());
+        assertEquals("Videojuegos", categoria.orElseThrow().getCategoria());
         System.out.println(categoria);
     }
 
     @Test
     public void testCategoriaSave() {
-        Categoria nuevaCategoria = new Categoria(1, "Accesorios", "Periféricos y complementos");
+        Categoria nuevaCategoria = new Categoria(1, "Videojuegos", "Videojuegos físicos y digitales");
         Categoria guardada = categoriaRepository.save(nuevaCategoria);
         assertNotNull(guardada.getIdCategoria());
-        assertEquals("Accesorios", guardada.getCategoria());
+        assertEquals("Videojuegos", guardada.getCategoria());
     }
 
     @Test
     public void testCategoriaActualizar() {
-        Optional<Categoria> categoria = categoriaRepository.findById(2);
+        Optional<Categoria> categoria = categoriaRepository.findById(10);
         categoria.orElseThrow().setCategoria("Videojuegos");
         categoria.orElseThrow().setDescripcion("Juegos físicos y digitales");
 
@@ -60,9 +60,18 @@ public class CategoriaTestIntegracion {
 
     @Test
     public void testCategoriaDelete() {
-        if (categoriaRepository.existsById(3)) {
-            categoriaRepository.deleteById(3);
-        }
-        assertFalse(categoriaRepository.existsById(3));
+        // Crear una categoría temporal para la prueba
+        Categoria nueva = new Categoria();
+        nueva.setCategoria("Temporal");
+        nueva.setDescripcion("Categoría de prueba temporal");
+
+        // Guardar la categoría en la BD
+        Categoria guardada = categoriaRepository.save(nueva);
+
+        // Eliminar la categoría recién creada
+        categoriaRepository.deleteById(guardada.getIdCategoria());
+
+        // Validar que ya no exista
+        assertFalse(categoriaRepository.existsById(guardada.getIdCategoria()));
     }
 }

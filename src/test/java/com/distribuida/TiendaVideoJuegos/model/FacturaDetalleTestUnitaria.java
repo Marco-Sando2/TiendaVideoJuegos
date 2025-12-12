@@ -40,38 +40,40 @@ public class FacturaDetalleTestUnitaria {
         );
     }
 
-    /*@Test
+    @Test
     public void testFacturaDetalleSetters() {
-        facturaDetalle.setIdFacturaDetalla(22);
-        facturaDetalle.setCantidad("Cableado");
-        accesorios.setC("Switch");
-        accesorios.setMarca("Razer");
-        accesorios.setColor("Negro");
-        accesorios.setConexion("USB");
+        Factura factura = new Factura();
+        factura.setIdFactura(1);
 
-        assertAll("Validar datos modificados - Accesorios",
-                () -> assertEquals(22, accesorios.getIdProducto()),
-                () -> assertEquals("Cableado", accesorios.getConectividad()),
-                () -> assertEquals("Switch", accesorios.getCompatibilidad()),
-                () -> assertEquals("Razer", accesorios.getMarca()),
-                () -> assertEquals("Negro", accesorios.getColor()),
-                () -> assertEquals("USB", accesorios.getConexion())
+        Producto producto = new Producto();
+        producto.setIdProducto(21);
+
+        facturaDetalle.setIdFacturaDetalle(82);
+        facturaDetalle.setCantidad(2);
+        facturaDetalle.setSubtotal(119.98);
+        facturaDetalle.setFactura(factura);
+        facturaDetalle.setProducto(producto);
+
+        assertAll("Validar datos modificados - FacturaDetalle",
+                () -> assertEquals(82, facturaDetalle.getIdFacturaDetalle()),
+                () -> assertEquals(2, facturaDetalle.getCantidad()),
+                () -> assertEquals(119.98, facturaDetalle.getSubtotal()),
+                () -> assertEquals(1, facturaDetalle.getFactura().getIdFactura()),
+                () -> assertEquals(21, facturaDetalle.getProducto().getIdProducto())
         );
     }
 
     @Test
-    public void testAutorToString() {
-        String str = accesorios.toString();
-        assertAll("Validar contenido de toString - Accesorios",
-                () -> assertTrue(str.contains("21")),
-                () -> assertTrue(str.contains("Inalámbrico")),
-                () -> assertTrue(str.contains("PS5")),
-                () -> assertTrue(str.contains("Sony")),
-                () -> assertTrue(str.contains("Blanco")),
-                () -> assertTrue(str.contains("USB-C"))
+    public void testFacturaDetalleToString() {
+        String str = facturaDetalle.toString();
+        assertAll("Validar contenido de toString - FacturaDetalle",
+                () -> assertTrue(str.contains("81")),
+                () -> assertTrue(str.contains("1")),
+                () -> assertTrue(str.contains("59.99")),
+                () -> assertTrue(str.contains("1")),
+                () -> assertTrue(str.contains("1"))
         );
     }
 
-}*/
-
 }
+

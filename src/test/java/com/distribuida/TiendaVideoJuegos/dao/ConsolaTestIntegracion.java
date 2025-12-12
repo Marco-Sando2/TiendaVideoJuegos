@@ -74,9 +74,9 @@ public class ConsolaTestIntegracion {
     // 5. Eliminar una consola
     @Test
     public void testConsolaDelete() {
-        if (consolaRepository.existsById(3)) {
-            consolaRepository.deleteById(3);
+        if (consolaRepository.existsById(33)) {
+            consolaRepository.deleteById(33);
         }
-        assertFalse(consolaRepository.existsById(3));
+        assertFalse(consolaRepository.existsById(33));
     }
 }

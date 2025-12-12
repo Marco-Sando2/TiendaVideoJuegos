@@ -74,10 +74,24 @@ public class ClienteTestIntegracion {
 
     @Test
     public void testClienteDelete() {
-        if (clienteRepository.existsById(5)) {
-            clienteRepository.deleteById(5);
-        }
-        assertFalse(clienteRepository.existsById(5));
+        // Crear un cliente temporal para la prueba
+        Cliente nuevo = new Cliente();
+        nuevo.setCedula("9999999999");
+        nuevo.setNombre("Temporal");
+        nuevo.setApellido("Prueba");
+        nuevo.setDireccion("Dirección temporal");
+        nuevo.setTelefono("0000000000");
+        nuevo.setCorreo("temp@test.com");
+
+        // Guardar el cliente en la BD
+        Cliente guardado = clienteRepository.save(nuevo);
+
+        // Eliminar el cliente recién creado
+        clienteRepository.deleteById(guardado.getIdCliente());
+
+        // Validar que ya no exista
+        assertFalse(clienteRepository.existsById(guardado.getIdCliente()));
     }
+
 
 }

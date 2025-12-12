@@ -33,7 +33,7 @@ private AccesoriosRepository accesoriosRepository;
 
     @Test
     public void testAccesoriosFindOne() {
-        Optional<Accesorios> accesorio = accesoriosRepository.findById(1);
+        Optional<Accesorios> accesorio = accesoriosRepository.findById(21);
         assertTrue(accesorio.isPresent());
         assertEquals("Sony", accesorio.orElse(null).getMarca());
         System.out.println(accesorio);
@@ -42,7 +42,7 @@ private AccesoriosRepository accesoriosRepository;
     @Test
     public void testAccesoriosSave() {
         Accesorios nuevoAccesorio = new Accesorios(
-                1,"Bluetooth", "PS5", "Sony", "Negro", "USB-C"
+                21,"Inalámbrico", "PS5", "Sony", "Blanco", "USB-C"
         );
         Accesorios guardado = accesoriosRepository.save(nuevoAccesorio);
         assertNotNull(guardado.getIdProducto());
@@ -51,7 +51,7 @@ private AccesoriosRepository accesoriosRepository;
 
     @Test
     public void testAccesoriosActualizar() {
-        Optional<Accesorios> accesorio = accesoriosRepository.findById(2);
+        Optional<Accesorios> accesorio = accesoriosRepository.findById(30);
         accesorio.orElseThrow().setColor("Rojo");
         accesorio.orElseThrow().setConexion("HDMI");
 
@@ -62,10 +62,10 @@ private AccesoriosRepository accesoriosRepository;
 
     @Test
     public void testAccesoriosDelete() {
-        if (accesoriosRepository.existsById(3)) {
-            accesoriosRepository.deleteById(3);
+        if (accesoriosRepository.existsById(30)) {
+            accesoriosRepository.deleteById(30);
         }
-        assertFalse(accesoriosRepository.existsById(3));
+        assertFalse(accesoriosRepository.existsById(30));
     }
 
 
