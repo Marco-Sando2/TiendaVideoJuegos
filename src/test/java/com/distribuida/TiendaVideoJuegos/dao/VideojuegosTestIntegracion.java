@@ -36,19 +36,19 @@ public class VideojuegosTestIntegracion {
     public void testVideojuegoFindOne() {
         Optional<Videojuego> videojuego = videojuegoRepository.findById(1);
         assertTrue(videojuego.isPresent());
-        assertEquals("FIFA 24", videojuego.orElseThrow().getEstudio()); // ejemplo de campo esperado
+        assertEquals("EA Sports", videojuego.orElseThrow().getEstudio()); // ejemplo de campo esperado
         System.out.println(videojuego);
     }
 
     @Test
     public void testVideojuegoSave() {
         Videojuego nuevoVideojuego = new Videojuego(
-                0, // dejar que JPA genere el id
-                "PlayStation 5",
+                1,
+                "PS5",
                 "Deportes",
-                "2023-09-29",
+                "2023-09-15",
                 "EA Sports",
-                "E",
+                "T",
                 "Multijugador"
         );
 

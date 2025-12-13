@@ -2,6 +2,7 @@ package com.distribuida.TiendaVideoJuegos.dao;
 
 import com.distribuida.dao.FacturaRepository;
 import com.distribuida.dao.ClienteRepository;
+import com.distribuida.model.Categoria;
 import com.distribuida.model.Factura;
 import com.distribuida.model.Cliente;
 import jakarta.transaction.Transactional;
@@ -51,7 +52,7 @@ public class FacturaTestIntegracion {
 
         Factura nuevaFactura = new Factura(
                 0,
-                "FAC-100",
+                "F100",
                 new Date(),
                 100.00,
                 12.00,
@@ -62,7 +63,7 @@ public class FacturaTestIntegracion {
         Factura guardada = facturaRepository.save(nuevaFactura);
 
         assertNotNull(guardada.getIdFactura());
-        assertEquals("FAC-100", guardada.getNumFactura());
+        assertEquals("F100", guardada.getNumFactura());
         assertEquals(cliente.getIdCliente(), guardada.getCliente().getIdCliente());
     }
 
@@ -80,9 +81,18 @@ public class FacturaTestIntegracion {
 
     @Test
     public void testFacturaDelete() {
-        if (facturaRepository.existsById(79)) {
-            facturaRepository.deleteById(79);
-        }
-        assertFalse(facturaRepository.existsById(79));
+        // Crear una categoría temporal para la prueba
+        Factura nueva = new Factura();
+        nueva.setNumFactura("fF0002");
+        nueva.setTotal(499.99);
+
+        // Guardar la categoría en la BD
+        Factura guardada = facturaRepository.save(nueva);
+
+        // Eliminar la categoría recién creada
+        facturaRepository.deleteById(guardada.getIdFactura());
+
+        // Validar que ya no exista
+        assertFalse(facturaRepository.existsById(guardada.getIdFactura()));
     }
 }

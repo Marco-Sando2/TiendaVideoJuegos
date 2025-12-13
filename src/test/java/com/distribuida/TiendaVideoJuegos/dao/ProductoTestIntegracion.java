@@ -80,10 +80,19 @@ public class ProductoTestIntegracion {
 
     @Test
     public void testProductoDelete() {
-        if (productoRepository.existsById(3)) {
-            productoRepository.deleteById(3);
-        }
-        assertFalse(productoRepository.existsById(3));
+        // Crear una categoría temporal para la prueba
+        Producto nueva = new Producto();
+        nueva.setNombre("Temporal");
+        nueva.setDescripcion("Futbol");
+
+        // Guardar la categoría en la BD
+        Producto guardada = productoRepository.save(nueva);
+
+        // Eliminar la categoría recién creada
+        productoRepository.deleteById(guardada.getIdProducto());
+
+        // Validar que ya no exista
+        assertFalse(productoRepository.existsById(guardada.getIdProducto()));
     }
 }
 
