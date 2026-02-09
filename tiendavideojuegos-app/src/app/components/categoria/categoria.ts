@@ -13,7 +13,7 @@ import { MatSort } from '@angular/material/sort';
   templateUrl: './categoria.html',
   styleUrl: './categoria.css',
 })
-export class CategoriaComponent {
+export class CategoriaComponent implements OnInit {
 
   @ViewChild('formularioCategoria') formularioCategoria!: ElementRef;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -25,7 +25,7 @@ export class CategoriaComponent {
   idEditar: number | null = null;
   
   dataSource!: MatTableDataSource<Categoria>;
-  mostrarColumnas: String[] = ['idCategoria', 'descripcion', 'acciones'];
+  mostrarColumnas: String[] = ['idCategoria','categoria', 'descripcion', 'acciones'];
 
   constructor(private categoriaService: CategoriaService) { }
   
