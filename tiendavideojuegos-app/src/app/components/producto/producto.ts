@@ -97,7 +97,7 @@ export class ProductoComponent implements OnInit {
         this.productoService.delete(this.producto.idProducto).subscribe(() =>{
           this.findAll();
           this.producto = {} as Producto;
-          Swal.fire('Eliminado','El libro a sido eliminado','success');
+          Swal.fire('Eliminado','El producto a sido eliminado','success');
         })
 
       }else{
@@ -138,7 +138,28 @@ export class ProductoComponent implements OnInit {
     this.dataSource.filter = filtro.trim().toLocaleLowerCase();
   }
 
+abrirModalDetalles(producto: Producto): void{
+  this.productoSeleccionado = producto;
+  this.dialog.open(this.modalDetalles, {
+    width: '500px'
+  });
+}
 
+abrirModal(producto?: Producto): void{
+  if(producto){
+    this.producto = {...producto};
+    this.editar = true;
+    this.idEditar = producto.idProducto;
+}else{
+    this.producto = { } as Producto;
+    this.editar = false;
+    this.idEditar = null;
+  }
+  this.dialog.open(this.modalProducto,{
+    width: '800px',
+    disableClose: true
+  })
+}
 
 
 }
