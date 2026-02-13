@@ -9,6 +9,7 @@ import { CategoriaService } from '../../services/categoria';
 import { ProductoService } from '../../services/producto';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-producto',
@@ -104,6 +105,40 @@ export class ProductoComponent implements OnInit {
       }
     });
   }
+  
+  // //interaccion en la pagina
+  editarProducto(producto: Producto): void{
+    this.producto = { ...producto };
+    this.idEditar = producto.idProducto;
+    this.editar = true;
+
+    setTimeout(() => {
+      this.FormulariopProducto.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 100);
+  }
+
+  editarProductoCancelar(form: NgForm): void{
+    this.producto = { } as Producto;
+    this.idEditar = null;
+    this.editar = false;
+    form.resetForm();
+  }
+
+  guardarProducto(form: NgForm): void{
+    if(this.editar && this.idEditar !== null){
+      this.update();
+    }else{
+      this.save();
+    }
+    this.dialog.closeAll();
+  }
+
+  filtroProducto(event: Event):void{
+    const filtro = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filtro.trim().toLocaleLowerCase();
+  }
+
+
 
 
 }
