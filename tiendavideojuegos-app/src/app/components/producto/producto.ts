@@ -20,8 +20,8 @@ import { NgForm } from '@angular/forms';
 export class ProductoComponent implements OnInit {
 
   productoS: Producto[] = [];
-  categorias: Categoria [] = [];
-  producto: Producto = { } as Producto;
+  categorias: Categoria[] = [];
+  producto: Producto = {} as Producto;
   editar: boolean = false;
   idEditar: number | null = null;
   dataSource!: MatTableDataSource<Producto>;
@@ -29,19 +29,19 @@ export class ProductoComponent implements OnInit {
   imagenPrevia: string = "";
   productoSeleccionado: Producto | null = null;
 
-  mostrarColumnas: String[] = ['nombre', 'idProducto','precio','tipoProducto'];
+  mostrarColumnas: String[] = ['nombre', 'idProducto', 'precio', 'tipoProducto'];
   @ViewChild('FormulariopProducto') FormulariopProducto!: ElementRef;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild('modalProducto') modalProducto!: TemplateRef<any>;
   @ViewChild('modalDetalles') modalDetalles!: TemplateRef<any>;
 
-    constructor(
-      private productoService: ProductoService,
-      private categoriaService: CategoriaService,
-      private dialog: MatDialog,
-      private http: HttpClient
-    ){}
+  constructor(
+    private productoService: ProductoService,
+    private categoriaService: CategoriaService,
+    private dialog: MatDialog,
+    private http: HttpClient
+  ) { }
 
 
   ngOnInit(): void {
@@ -49,41 +49,41 @@ export class ProductoComponent implements OnInit {
     this.cargarCategorias();
   }
 
-  findAll(): void{
+  findAll(): void {
     this.productoService.findAll().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-     });
+    });
   }
 
-  cargarCategorias(): void{
-    this.categoriaService.findAll().subscribe(data=> {
+  cargarCategorias(): void {
+    this.categoriaService.findAll().subscribe(data => {
       this.categorias = data;
     });
   }
 
-  save(): void{
-    this.productoService.save(this.producto).subscribe(()=>{
-      this.producto= { } as Producto;
+  save(): void {
+    this.productoService.save(this.producto).subscribe(() => {
+      this.producto = {} as Producto;
       this.findAll();
     });
   }
 
-  update(): void{
-    if(this.idEditar !== null){
-      this.productoService.update(this.idEditar, this.producto).subscribe(()=>{
-      this.producto = { } as Producto;
-      this.editar = false;
-      this.idEditar = null;
-      this.findAll();
-       });
-      }
+  update(): void {
+    if (this.idEditar !== null) {
+      this.productoService.update(this.idEditar, this.producto).subscribe(() => {
+        this.producto = {} as Producto;
+        this.editar = false;
+        this.idEditar = null;
+        this.findAll();
+      });
+    }
   }
 
-   delete(): void{
-    Swal.fire({ 
-      title: '¿Dese eliminar el producto?',
+  delete(): void {
+    Swal.fire({
+      title: '¿Desea eliminar el producto?',
       text: 'Esta accion no se puede deshacer',
       icon: 'warning',
       showCancelButton: true,
@@ -92,22 +92,22 @@ export class ProductoComponent implements OnInit {
       confirmButtonColor: '#d33',
       cancelButtonColor: '#3085d6'
 
-    }).then((result) =>{
-      if(result.isConfirmed){
-        this.productoService.delete(this.producto.idProducto).subscribe(() =>{
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.productoService.delete(this.producto.idProducto).subscribe(() => {
           this.findAll();
           this.producto = {} as Producto;
-          Swal.fire('Eliminado','El producto a sido eliminado','success');
+          Swal.fire('Eliminado', 'El producto a sido eliminado', 'success');
         })
 
-      }else{
+      } else {
         this.producto = {} as Producto;
       }
     });
   }
-  
+
   // //interaccion en la pagina
-  editarProducto(producto: Producto): void{
+  editarProducto(producto: Producto): void {
     this.producto = { ...producto };
     this.idEditar = producto.idProducto;
     this.editar = true;
@@ -117,49 +117,72 @@ export class ProductoComponent implements OnInit {
     }, 100);
   }
 
-  editarProductoCancelar(form: NgForm): void{
-    this.producto = { } as Producto;
+  editarProductoCancelar(form: NgForm): void {
+    this.producto = {} as Producto;
     this.idEditar = null;
     this.editar = false;
     form.resetForm();
   }
 
-  guardarProducto(form: NgForm): void{
-    if(this.editar && this.idEditar !== null){
+  guardarProducto(form: NgForm): void {
+    if (this.editar && this.idEditar !== null) {
       this.update();
-    }else{
+    } else {
       this.save();
     }
     this.dialog.closeAll();
   }
 
-  filtroProducto(event: Event):void{
+  filtroProducto(event: Event): void {
     const filtro = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filtro.trim().toLocaleLowerCase();
   }
 
-abrirModalDetalles(producto: Producto): void{
-  this.productoSeleccionado = producto;
-  this.dialog.open(this.modalDetalles, {
-    width: '500px'
-  });
-}
-
-abrirModal(producto?: Producto): void{
-  if(producto){
-    this.producto = {...producto};
-    this.editar = true;
-    this.idEditar = producto.idProducto;
-}else{
-    this.producto = { } as Producto;
-    this.editar = false;
-    this.idEditar = null;
+  abrirModalDetalles(producto: Producto): void {
+    this.productoSeleccionado = producto;
+    this.dialog.open(this.modalDetalles, {
+      width: '500px'
+    });
   }
-  this.dialog.open(this.modalProducto,{
-    width: '800px',
-    disableClose: true
-  })
-}
+
+  abrirModal(producto?: Producto): void {
+    if (producto) {
+      this.producto = { ...producto };
+      this.editar = true;
+      this.idEditar = producto.idProducto;
+    } else {
+      this.producto = {} as Producto;
+      this.editar = false;
+      this.idEditar = null;
+    }
+    this.dialog.open(this.modalProducto, {
+      width: '800px',
+      disableClose: true
+    })
+  }
+
+  comparaCategorias(a1: Categoria, a2: Categoria): boolean {
+    return a1 && a2 ? a1.idCategoria === a2.idCategoria : a1 === a2;
+  }
+
+  oneSeleccionarArchivo(event: any) {
+    this.seleccionarArchivo = event.target.files[0];
+  }
+
+  subirImagen(): void {
+    const formData = new FormData;
+    formData.append("file", this.seleccionarArchivo);
+
+
+    if (this.producto.tipoPorducto) {
+      formData.append("oldImage", this.producto.tipoPorducto)
+    }
+
+    this.http.post<{ ruta: string}>('http://localhost:8080/api/upload-portada', formData).subscribe(res =>{
+      this.producto.tipoPorducto = res.ruta;
+      this.imagenPrevia = res.ruta;
+     })
+  }
 
 
 }
