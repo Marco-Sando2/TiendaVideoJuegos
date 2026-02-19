@@ -64,6 +64,10 @@ export class ProductoComponent implements OnInit {
   }
 
   save(): void {
+    if (!this.producto.tipoProducto && this.producto.tipoPorducto) {
+      this.producto.tipoProducto = this.producto.tipoPorducto;
+    }
+
     this.productoService.save(this.producto).subscribe(() => {
       this.producto = {} as Producto;
       this.findAll();
@@ -72,6 +76,10 @@ export class ProductoComponent implements OnInit {
 
   update(): void {
     if (this.idEditar !== null) {
+      if (!this.producto.tipoProducto && this.producto.tipoPorducto) {
+        this.producto.tipoProducto = this.producto.tipoPorducto;
+      }
+
       this.productoService.update(this.idEditar, this.producto).subscribe(() => {
         this.producto = {} as Producto;
         this.editar = false;

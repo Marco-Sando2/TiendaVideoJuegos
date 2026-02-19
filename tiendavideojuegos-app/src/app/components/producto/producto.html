@@ -113,6 +113,7 @@
                     </mat-form-field>
                 </div>
 
+
                 <div class="col-md-12 mb-2">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Descripción</mat-label>
@@ -138,7 +139,7 @@
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Categoría</mat-label>
                         <mat-select [(ngModel)]="producto.categoria" name="categoria" required
-                                    [compareWith]="comparaCategorias">
+                            [compareWith]="comparaCategorias">
                             <mat-option *ngFor="let c of categorias" [value]="c">
                                 {{ c.categoria }}
                             </mat-option>
@@ -150,8 +151,8 @@
                 <div class="col-md-12 mb-2">
                     <div class="custom-file-upload">
                         <input #fileInput type="file" (change)="onFileSelected($event)" hidden>
-                        <button mat-raised-button color="primary"
-                                (click)="fileInput.click()" style="margin-right:10px;">
+                        <button mat-raised-button color="primary" (click)="fileInput.click()"
+                            style="margin-right:10px;">
                             Seleccionar Imagen
                         </button>
 
@@ -159,8 +160,7 @@
                             {{ seleccionarArchivo.name }}
                         </span>
 
-                        <button mat-raised-button color="primary"
-                                (click)="subirImagen()">
+                        <button mat-raised-button color="primary" (click)="subirImagen()">
                             Subir Imagen
                         </button>
                     </div>
@@ -172,9 +172,8 @@
 
     <mat-dialog-actions align="end">
         <button mat-button mat-dialog-close>Cancelar</button>
-        <button mat-flat-button color="primary"
-                (click)="guardarProducto(formProducto)"
-                [disabled]="formProducto.invalid">
+        <button mat-flat-button color="primary" (click)="guardarProducto(formProducto)"
+            [disabled]="formProducto.invalid">
             {{ editar ? 'Actualizar' : 'Guardar' }}
         </button>
     </mat-dialog-actions>
@@ -186,9 +185,8 @@
     <mat-dialog-content>
 
         <div *ngIf="productoSeleccionado?.tipoPorducto">
-            <img [src]="'http://localhost:8080/' + productoSeleccionado?.tipoPorducto"
-                 alt="Imagen del producto"
-                 style="width:400px; margin-top:1rem;">
+            <img [src]="'http://localhost:8080/' + productoSeleccionado?.tipoPorducto" alt="Imagen del producto"
+                style="width:400px; margin-top:1rem;">
         </div>
 
         <p><strong>Nombre:</strong> {{ productoSeleccionado?.nombre }}</p>
