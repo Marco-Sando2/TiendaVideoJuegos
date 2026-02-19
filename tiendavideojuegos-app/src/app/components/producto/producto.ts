@@ -165,9 +165,10 @@ export class ProductoComponent implements OnInit {
     return a1 && a2 ? a1.idCategoria === a2.idCategoria : a1 === a2;
   }
 
-  oneSeleccionarArchivo(event: any) {
+  onFileSelected(event: any) {
     this.seleccionarArchivo = event.target.files[0];
   }
+
 
   subirImagen(): void {
     const formData = new FormData;
@@ -178,10 +179,10 @@ export class ProductoComponent implements OnInit {
       formData.append("oldImage", this.producto.tipoPorducto)
     }
 
-    this.http.post<{ ruta: string}>('http://localhost:8080/api/upload-portada', formData).subscribe(res =>{
+    this.http.post<{ ruta: string }>('http://localhost:8080/api/upload-portada', formData).subscribe(res => {
       this.producto.tipoPorducto = res.ruta;
       this.imagenPrevia = res.ruta;
-     })
+    })
   }
 
 
