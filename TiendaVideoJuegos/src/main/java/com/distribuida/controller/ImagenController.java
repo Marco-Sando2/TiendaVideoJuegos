@@ -42,7 +42,7 @@ public class ImagenController {
             return ResponseEntity.ok(response);
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("erro","Error al subir la iamgen"+e.getMessage()));
+                    .body(Map.of("error","Error al subir la imagen"+e.getMessage()));
 
         }
     }

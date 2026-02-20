@@ -64,8 +64,8 @@ export class ProductoComponent implements OnInit {
   }
 
   save(): void {
-    if (!this.producto.tipoProducto && this.producto.tipoPorducto) {
-      this.producto.tipoProducto = this.producto.tipoPorducto;
+    if (!this.producto.tipoProducto && this.producto.tipoProducto) {
+      this.producto.tipoProducto = this.producto.tipoProducto;
     }
 
     this.productoService.save(this.producto).subscribe(() => {
@@ -76,8 +76,8 @@ export class ProductoComponent implements OnInit {
 
   update(): void {
     if (this.idEditar !== null) {
-      if (!this.producto.tipoProducto && this.producto.tipoPorducto) {
-        this.producto.tipoProducto = this.producto.tipoPorducto;
+      if (!this.producto.tipoProducto && this.producto.tipoProducto) {
+        this.producto.tipoProducto = this.producto.tipoProducto;
       }
 
       this.productoService.update(this.idEditar, this.producto).subscribe(() => {
@@ -183,12 +183,12 @@ export class ProductoComponent implements OnInit {
     formData.append("file", this.seleccionarArchivo);
 
 
-    if (this.producto.tipoPorducto) {
-      formData.append("oldImage", this.producto.tipoPorducto)
+    if (this.producto.tipoProducto) {
+      formData.append("oldImage", this.producto.tipoProducto)
     }
 
     this.http.post<{ ruta: string }>('http://localhost:8080/api/upload-portada', formData).subscribe(res => {
-      this.producto.tipoPorducto = res.ruta;
+      this.producto.tipoProducto = res.ruta;
       this.imagenPrevia = res.ruta;
     })
   }
